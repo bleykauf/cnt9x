@@ -31,16 +31,16 @@ def append_number_to_filename(filename):
         except FileNotFoundError:
             return test_filename
         counter += 1
-        if counter > 1000:
-            raise Exception('ffoop0')
+        if counter > 9000:
+            raise Exception('file name counter is over 9000!')
 
 def frequency_measurement(meas_time=1, n_samples=10**5, channel='A', data_name='testing'):
 
-    meas_rate = int(n_samples/meas_time)
+    sample_rate = int(n_samples/meas_time)
     counter = CNT90('USB0::0x14EB::0x0091::956628::INSTR')
 
-    print('starting measurement, t=', meas_time, 'sample rate', meas_rate)
-    frequencies = counter.frequency_measurement(channel, meas_time, meas_rate)
+    print('starting measurement, t=', meas_time, 'sample rate', sample_rate)
+    frequencies = counter.frequency_measurement(channel, meas_time, sample_rate)
     mean_frequency = np.mean(frequencies)    
     frequencies = frequencies - mean_frequency
     
@@ -51,7 +51,7 @@ def frequency_measurement(meas_time=1, n_samples=10**5, channel='A', data_name='
     with open(data_file_name + '.json', 'x') as f:
         json.dump({
             'measurement_time': meas_time,
-            'measurement_rate': meas_rate,
+            'measurement_rate': sample_rate,
             'frequencies': list(frequencies),
             'is_locked': is_locked
         }, f)
@@ -67,7 +67,7 @@ def frequency_measurement(meas_time=1, n_samples=10**5, channel='A', data_name='
     plt.savefig(data_file_name + '_timerec.pdf', dpi=300, bbox_inches='tight')
     plt.show()
         
-    f, Pxx_spec = signal.welch(frequencies, meas_rate, ('kaiser', 100), nperseg=1024, scaling='density')
+    f, Pxx_spec = signal.welch(frequencies, sample_rate, ('kaiser', 100), nperseg=1024, scaling='density')
     plt.figure(figsize = (8,5))
     plt.loglog(f, np.sqrt(Pxx_spec))
     plt.xlabel('Frequency / Hz')
@@ -79,8 +79,8 @@ def frequency_measurement(meas_time=1, n_samples=10**5, channel='A', data_name='
     data_rel = np.array(frequencies)*767e-9/2.99e8
     # calculate the Allan deviation
     tau_max = np.log10(len(frequencies))
-    taus = np.logspace(0,tau_max)/meas_rate
-    (taus_used, adev, adeverror, _) = allantools.adev(data_rel, data_type='freq', rate=meas_rate, taus=taus)
+    taus = np.logspace(0,tau_max)/sample_rate
+    (taus_used, adev, adeverror, _) = allantools.adev(data_rel, data_type='freq', rate=sample_rate, taus=taus)
         
     plt.figure(figsize = (8,5))
     # plot the Allan devation
