@@ -11,7 +11,6 @@ from time import sleep
 
 
 from cnt90 import CNT90
-#import rpyc
 import json
 import numpy as np
 from matplotlib import pyplot as plt

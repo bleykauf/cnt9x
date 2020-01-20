@@ -27,14 +27,15 @@ class CNT90:
         print(rm.list_resources())
     
         found = False
-        for address in rm.list_resources():
+        for address in [address, *rm.list_resources()]:
             try:
                 print('trying to connect to', address)
                 device = rm.open_resource(address)
-                print('connection successful! Checking whether it is the correct device')
+                print('Connection successful! Checking whether it is the correct device.')
                 assert 'CNT-9' in device.query('*IDN?')
-                print('it is! The device address is', address)
+                print('It is! The device address is', address)
                 found = True
+                break
             except:
                 pass
 
