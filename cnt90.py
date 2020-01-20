@@ -69,7 +69,7 @@ class CNT90:
         # clear state
         self.write('*CLS')
 
-        # increase timeout to prevent errors with large datasets
+        # increase timeout to prevent errors with large datasets, in ms
         self.device.timeout = 120000
 
         # how many entries of the buffer can be transmitted with one query?
@@ -96,6 +96,17 @@ class CNT90:
                 break
 
         return data
+
+    def write(self, cmd):
+        """Send one or multiple commands to the device"""
+        if isinstance(cmd, (tuple, list)):
+            self.device.write(';'.join(cmd))
+        else:
+            self.device.write(cmd)
+
+    def abort(self):
+        """Abort the current command"""
+        self.write(':ABORT')
 
     def frequency_measurement(self, channel, duration, sampling_freq,
                               trigger_source=None, wait=True):
@@ -131,7 +142,7 @@ class CNT90:
             return self.wait_and_return()
 
     def wait_and_return(self):
-        while not self.command_done():
+        while not self.command_done:
             sleep(0.1)
 
         data = self.read_buffer()
@@ -139,17 +150,8 @@ class CNT90:
             return data[0]
         return data
 
+    @property
     def command_done(self):
         """Check whether the device has finished the last command"""
         return self.read('*OPC?') == '1'
 
-    def write(self, cmd):
-        """Send one or multiple commands to the device"""
-        if isinstance(cmd, (tuple, list)):
-            self.device.write(';'.join(cmd))
-        else:
-            self.device.write(cmd)
-
-    def abort(self):
-        """Abort the current command"""
-        self.write(':ABORT')
