@@ -43,7 +43,7 @@ def append_number_to_filename(filename):
             raise Exception('ffoop0')
             
 
-def freqmeas(MEASUREMENT_TIME = 1, NO_OF_SAMPLES= 100000, COUNTER = 'C'):#,MEASUREMENT_RATE= 10**5):
+def freqmeas(MEASUREMENT_TIME = 1, NO_OF_SAMPLES= 100000, COUNTER = 'A'):#,MEASUREMENT_RATE= 10**5):
 #    MEASUREMENT_TIME = 1
     MEASUREMENT_RATE = int(NO_OF_SAMPLES/MEASUREMENT_TIME)
     print(MEASUREMENT_RATE)
@@ -153,12 +153,12 @@ def freqmeas(MEASUREMENT_TIME = 1, NO_OF_SAMPLES= 100000, COUNTER = 'C'):#,MEASU
     
 # Measurement loop    
 IS_LOCKED = False
-DATA_FOLDER = '/home/qom/GAIN'
+DATA_FOLDER = "C:\\Users\\GAIN\\Desktop"
 DATA_NAME = 'Testing'
-NO_OF_SAMPLES = 10**5 ## MAXIMUM = 10^5
+NO_OF_SAMPLES = 10**2 ## MAXIMUM = 10^5
 COUNTER = 'A'
 
-for t in [1, 10, 100]:
-    freqmeas(t)#Default no. of samples = 10**5, Default counter = 'C'
+for t in [1, 10]:
+    freqmeas(t, NO_OF_SAMPLES= 1000, COUNTER = 'A')#Default no. of samples = 10**5, Default counter = 'C'
 #    freqmeas(MEASUREMENT_TIME = t)#,MEASUREMENT_RATE = 10**5)
 #

@@ -23,9 +23,9 @@ class CNT90:
         self.connect_to_device(address)
 
     def connect_to_device(self, address):
-        rm = visa.ResourceManager('@py')
+        rm = visa.ResourceManager()
         print(rm.list_resources())
-
+    
         found = False
         for address in rm.list_resources():
             try:
@@ -152,9 +152,3 @@ class CNT90:
     def abort(self):
         """Abort the current command"""
         self.write(':ABORT')
-
-
-if __name__ == "__main__":
-    from ben.devices import run_device_service
-    device = CNT90('GPIB0::10::INSTR')
-    run_device_service(device, 'cnt90')
