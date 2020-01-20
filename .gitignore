@@ -129,5 +129,5 @@ dmypy.json
 .pyre/
 
 # additional files
-.json
-.pdf
+*.json
+*.pdf
