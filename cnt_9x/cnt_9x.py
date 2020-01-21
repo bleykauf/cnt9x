@@ -15,7 +15,7 @@ TRIGGER_SOURCES = {
     'REAR': 'EXT4',
 }
 
-class CNT90:
+class CNT9x:
     device = None
     batch_size = None
 

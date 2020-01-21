@@ -1,1 +1,1 @@
-from cnt_9x import CNT90
+from .cnt_9x import CNT90
