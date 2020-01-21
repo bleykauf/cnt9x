@@ -16,15 +16,12 @@ TRIGGER_SOURCES = {
 }
 
 class CNT9x:
-    device = None
-    batch_size = None
 
     def __init__(self, address=None):
         self.connect_to_device(address)
 
     def connect_to_device(self, address):
         rm = visa.ResourceManager()
-        print(rm.list_resources())
     
         found = False
         for address in [address, *rm.list_resources()]:
