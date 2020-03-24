@@ -106,7 +106,7 @@ class CNT9x:
         self.write(':ABORT')
 
     def frequency_measurement(self, channel, duration, sampling_freq,
-                              trigger_source=None, wait=True):
+                              trigger_source=None, wait=True, **kwargs):
         try:
             channel_idx = CHANNELS[channel]
         except ValueError:
