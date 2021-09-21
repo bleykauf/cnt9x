@@ -1,8 +1,7 @@
-from setuptools import setup, find_packages
+from setuptools import setup
+import versioneer
 
 setup(
-    name='cnt_9x',
-    version='0.1',
-    packages=find_packages(),
-    install_requires=['PyVISA']
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
 )
