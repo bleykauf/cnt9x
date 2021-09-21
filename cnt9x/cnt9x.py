@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import visa
+import pyvisa as visa
 from time import sleep
 
 CHANNELS = {"A": 1, "B": 2, "C": 3, "REAR": 4, "INTREF": 6}
